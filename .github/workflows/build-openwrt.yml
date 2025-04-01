@@ -1,64 +1,64 @@
-#
-# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
-#
-# https://github.com/P3TERX/Actions-OpenWrt
-# Description: Build OpenWrt using GitHub Actions
-#
+＃
+（C）2019-2020 P3Terx <https://p3terx.com>
+＃
+MIT许可证获得许可的免费软件。
+＃请参阅 /许可证以获取更多信息。
+＃
+＃https：//github.com/p3terx/actions-openwrt
+＃描述：使用github操作构建openwrt
+＃
 
-name: Build OpenWrt
+名称：构建openwrt
 
-on:
-  repository_dispatch:
-  workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
-        type: boolean
-  schedule:
-    - cron: 0 8 * * 2
+在：
+  repository_dispatch：
+  workflow_dispatch：
+    输入：
+      SSH：
+        描述：“与动作的ssh连接”
+        必需：false
+        默认：“ false”
+        类型：布尔值
+  日程：
+    -cron：：
 
-env:
-  REPO_URL: https://github.com/kkstone/immortalwrt-ipq50xx
-  REPO_BRANCH: openwrt-21.02
-  FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: .config
-  DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
-  UPLOAD_BIN_DIR: true
-  UPLOAD_FIRMWARE: true
-  UPLOAD_RELEASE: true
-  TZ: Asia/Shanghai
+env：
+  repo_url：https：//github.com/immortalwrt/immortalwrt
+  repo_branch：OpenWrt-24.10
+  feeds_conf：feeds.conf.default
+  config_file：.config
+  diy_p1_sh：diy-part1.sh
+  diy_p2_sh：diy-part2.sh
+  upload_bin_dir：True
+  upload_firmware：True
+  upload_release：TRUE
+  TZ：亚洲/上海
 
-jobs:
-  build:
-    runs-on: ubuntu-20.04
+工作：
+  建造：
+    运行：ubuntu-20.04
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@main
+    步骤：
+    -名称: Checkout
+      用途： Action/Checkout@Main
 
-    - name: Initialization environment
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n | tail -n 100
-        df -h
-        echo "Removing large packages"
-        sudo apt-get remove -y '^dotnet-.*'
-        sudo apt-get remove -y '^llvm-.*'
-        sudo apt-get remove -y 'php.*'
-        sudo apt-get remove -y '^mongodb-.*'
-        sudo apt-get remove -y '^mysql-.*'
-        sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel libgl1-mesa-dri
-        sudo apt-get autoremove -y
-        sudo apt-get clean
-        df -h
-        echo "Removing large directories"
+    -名称：初始化环境
+      env ：
+        debian_frontend ：非相互作用
+      运行：|
+        dpkg-Query -wf'$ {安装大小} \ t $ {package} \ n'|排序-n |尾巴-n 100
+        DF -H
+        回声“删除大包装”
+        sudo apt-get删除-y'^dotnet-。*'
+        sudo apt-get删除-y'^llvm-。*'
+        sudo apt -get删除-y'php。*'
+        sudo apt-get删除-y'^mongodb-。*'
+        sudo apt-get删除-y'^mysql  - 。*'
+        sudo apt-get删除-y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel libgl1-mesa-dri
+        sudo apt -get autoremove -y
+        sudo apt-get清洁
+        DF -H
+        回声“删除大型目录”
         sudo rm -rf /usr/share/dotnet/
         sudo rm -rf /usr/local/graalvm/
         sudo rm -rf /usr/local/.ghcup/
