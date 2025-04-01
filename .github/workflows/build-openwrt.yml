@@ -23,7 +23,7 @@ MIT许可证获得许可的免费软件。
     -cron：：
 
 env：
-  repo_url：https：//github.com/immortalwrt/immortalwrt
+  repo_url：https://github.com/immortalwrt/immortalwrt
   repo_branch：OpenWrt-24.10
   feeds_conf：feeds.conf.default
   config_file：.config
